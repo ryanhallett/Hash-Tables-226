@@ -197,28 +197,3 @@ print(f"""Quote Method:
     Unused: {unused_buckets(hashQuoteTable)}
     Total Collisions: {q_collisions}
     Time taken: {(clock):.3f} seconds""")
-
-
-# with 8192 Buckets:
-#  
-# Title Method: 
-# Unused: 2047
-# Total Collisions: 8855 
-# Time taken: 0.099 seconds
-#
-# Quote Method: 
-# Unused: 1345
-# Total Collisions: 8153
-# Time taken: 0.097 seconds
-# 
-# with 16384 Buckets:
-#
-# Title Method: 
-# Unused: 8180
-# Total Collisions: 6796
-# Time taken: 0.099 seconds
-#
-# Quote Method: 
-# Unused: 6600
-# Total Collisions: 5216
-# Time taken: 0.099 seconds
