@@ -164,12 +164,12 @@ with open(file, 'r', newline='',  encoding="utf8") as csvfile:
         #hashKeyQ = fold(quoteKey)
 
         # mid Square
-        hashKeyT = midSquare(titleKey)
-        hashKeyQ = midSquare(quoteKey)
+        #hashKeyT = midSquare(titleKey)
+        #hashKeyQ = midSquare(quoteKey)
 
         # universal
-        #hashKeyT = universal(titleKey)
-        #hashKeyQ = universal(quoteKey)
+        hashKeyT = universal(titleKey)
+        hashKeyQ = universal(quoteKey)
 
         # multiplication
         #hashKeyT = multiplication(titleKey)
