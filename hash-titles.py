@@ -73,8 +73,6 @@ def fold(key):
 def midSquare(key):
     # sqaure the key
     square = key * key
-    # extract 5 digits (length of size)
-
     # convert to strings
     str_list = str(square)
     # get the middle
