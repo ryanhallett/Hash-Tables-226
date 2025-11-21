@@ -52,7 +52,6 @@ def fold(key):
     slices = 3
     digits = []
     sliced = []
-    sum_slices = 0
 
     # if there is still digits in key
     while key > 0:
@@ -67,11 +66,6 @@ def fold(key):
 
     for i in range(0, len(digits), slices):
         sliced.append(digits[i:i + slices])
-
-    # my new key is 
-    for group in sliced:
-        sum_slices += j
-
     
     #return newKey
 
@@ -167,13 +161,13 @@ with open(file, 'r', newline='',  encoding="utf8") as csvfile:
         #hashKeyT = mod(titleKey)
         #hashKeyQ = mod(quoteKey)
 
-        # fold
-        hashKeyT = fold(titleKey)
-        hashKeyQ = fold(quoteKey)
+        # fold - NEED TO FIX STILL
+        # hashKeyT = fold(titleKey)
+        #hashKeyQ = fold(quoteKey)
 
         # mid Square
-        #hashKeyT = midSquare(titleKey)
-        #hashKeyQ = midSquare(quoteKey)
+        hashKeyT = midSquare(titleKey)
+        hashKeyQ = midSquare(quoteKey)
 
         # universal
         #hashKeyT = universal(titleKey)
