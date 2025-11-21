@@ -168,12 +168,12 @@ with open(file, 'r', newline='',  encoding="utf8") as csvfile:
         #hashKeyQ = midSquare(quoteKey)
 
         # universal
-        hashKeyT = universal(titleKey)
-        hashKeyQ = universal(quoteKey)
+        #hashKeyT = universal(titleKey)
+        #hashKeyQ = universal(quoteKey)
 
         # multiplication
-        #hashKeyT = multiplication(titleKey)
-        #hashKeyQ = multiplication(quoteKey)
+        hashKeyT = multiplication(titleKey)
+        hashKeyQ = multiplication(quoteKey)
 
         # handle collisions
         t_collisions += handle_collisions(hashTitleTable, hashKeyT, movie.movie_name)
