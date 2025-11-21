@@ -16,7 +16,7 @@ class DataItem:
         self.quote = line[8]
 
 # create empty hash tables
-size = 8192 
+size = 16384 
 
 # Going to use collision for this, so new tables needed
 hashTitleTable = [[] for _ in range(size)]
@@ -188,7 +188,23 @@ end = time.time()
 clock = end - start
 # out of the loop, find unused buckets
 
-print(f"""Title Method: Unused: {unused_buckets(hashTitleTable)},
-    Total Collisions: {t_collisions}, Time taken: {(clock):.3f} seconds""")
-print(f"""Quote Method: Unused: {unused_buckets(hashQuoteTable)},
-    Total Collisions: {q_collisions}, Time taken: {(clock):.3f} seconds""")
+print(f"""Title Method: 
+    Unused: {unused_buckets(hashTitleTable)}
+    Total Collisions: {t_collisions} 
+    Time taken: {(clock):.3f} seconds""")
+
+print(f"""Quote Method: 
+    Unused: {unused_buckets(hashQuoteTable)}
+    Total Collisions: {q_collisions}
+    Time taken: {(clock):.3f} seconds""")
+
+
+# with 8192 Buckets, Mod: 
+# 
+# 
+# with 16384 Buckets:
+# Title Method: Unused: 8180,
+# Total Collisions: 6796, Time taken: 0.097 seconds
+# Quote Method: Unused: 16384,
+# Total Collisions: 15000, Time taken: 0.097 seconds
+
