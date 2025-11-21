@@ -16,7 +16,7 @@ class DataItem:
         self.quote = line[8]
 
 # create empty hash tables
-size = 8192
+size = 16384
 
 # Going to use collision for this, so new tables needed
 hashTitleTable = [[] for _ in range(size)]
@@ -135,7 +135,7 @@ def unused_buckets(table):
             unused += 1
     return unused
 
-#t_collisions = 0
+t_collisions = 0
 q_collisions = 0
 
 start = time.time()
@@ -158,7 +158,7 @@ with open(file, 'r', newline='',  encoding="utf8") as csvfile:
         # ONE AT A TIME
         # commit after each attempt
         # mod
-        #hashKeyT = mod(titleKey)
+        hashKeyT = mod(titleKey)
         hashKeyQ = mod(quoteKey)
 
         # fold
@@ -178,8 +178,8 @@ with open(file, 'r', newline='',  encoding="utf8") as csvfile:
         #hash_quote = mod(quoteKey)
 
         # handle collisions
-        #t_collisions += handle_collisions(hashTitleTable, hashKeyT, movie.movie_name)
-        q_collisions += handle_collisions(hashTitleTable, hashKeyQ, movie.quote)
+        t_collisions += handle_collisions(hashTitleTable, hashKeyT, movie.movie_name)
+        q_collisions += handle_collisions(hashQuoteTable, hashKeyQ, movie.quote)
         
         counter += 1
 
@@ -187,12 +187,11 @@ end = time.time()
 clock = end - start
 # out of the loop, find unused buckets
 
-'''
+
 print(f"""Title Method: 
     Unused: {unused_buckets(hashTitleTable)}
     Total Collisions: {t_collisions} 
     Time taken: {(clock):.3f} seconds""")
-'''
 
 print(f"""Quote Method: 
     Unused: {unused_buckets(hashQuoteTable)}
@@ -208,19 +207,18 @@ print(f"""Quote Method:
 # Time taken: 0.099 seconds
 #
 # Quote Method: 
-# Unused: 8192
-# Total Collisions: 15000
-# Time taken: 0.099 seconds
+# Unused: 1345
+# Total Collisions: 8153
+# Time taken: 0.097 seconds
 # 
 # with 16384 Buckets:
 #
 # Title Method: 
 # Unused: 8180
 # Total Collisions: 6796
-# Time taken: 0.097 seconds
+# Time taken: 0.099 seconds
 #
 # Quote Method: 
-# Unused: 16384
-# Total Collisions: 15000
-# Time taken: 0.097 seconds
-
+# Unused: 6600
+# Total Collisions: 5216
+# Time taken: 0.099 seconds
