@@ -158,24 +158,24 @@ with open(file, 'r', newline='',  encoding="utf8") as csvfile:
         # ONE AT A TIME
         # commit after each attempt
         # mod
-        hashKeyT = mod(titleKey)
-        hashKeyQ = mod(quoteKey)
+        #hashKeyT = mod(titleKey)
+        #hashKeyQ = mod(quoteKey)
 
         # fold
-        #hash_title = mod(titleKey)
-        #hash_quote = mod(quoteKey)
+        hashKeyT = fold(titleKey)
+        hashKeyQ = fold(quoteKey)
 
         # mid Square
-        #hash_title = mod(titleKey)
-        #hash_quote = mod(quoteKey)
+        #hashKeyT = midSquare(titleKey)
+        #hashKeyQ = midSquare(quoteKey)
 
         # universal
-        #hash_title = mod(titleKey)
-        #hash_quote = mod(quoteKey)
+        #hashKeyT = universal(titleKey)
+        #hashKeyQ = universal(quoteKey)
 
         # multiplication
-        #hash_title = mod(titleKey)
-        #hash_quote = mod(quoteKey)
+        #hashKeyT = multiplication(titleKey)
+        #hashKeyQ = multiplication(quoteKey)
 
         # handle collisions
         t_collisions += handle_collisions(hashTitleTable, hashKeyT, movie.movie_name)
