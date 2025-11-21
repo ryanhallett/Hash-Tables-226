@@ -135,7 +135,7 @@ def unused_buckets(table):
             unused += 1
     return unused
 
-t_collisions = 0
+#t_collisions = 0
 q_collisions = 0
 
 start = time.time()
@@ -158,7 +158,7 @@ with open(file, 'r', newline='',  encoding="utf8") as csvfile:
         # ONE AT A TIME
         # commit after each attempt
         # mod
-        hashKeyT = mod(titleKey)
+        #hashKeyT = mod(titleKey)
         hashKeyQ = mod(quoteKey)
 
         # fold
@@ -178,20 +178,21 @@ with open(file, 'r', newline='',  encoding="utf8") as csvfile:
         #hash_quote = mod(quoteKey)
 
         # handle collisions
-        t_collisions += handle_collisions(hashTitleTable, hashKeyT, movie.movie_name)
-        q_collisions += handle_collisions(hashTitleTable, hashKeyT, movie.quote)
+        #t_collisions += handle_collisions(hashTitleTable, hashKeyT, movie.movie_name)
+        q_collisions += handle_collisions(hashTitleTable, hashKeyQ, movie.quote)
         
-
         counter += 1
 
 end = time.time()
 clock = end - start
 # out of the loop, find unused buckets
 
+'''
 print(f"""Title Method: 
     Unused: {unused_buckets(hashTitleTable)}
     Total Collisions: {t_collisions} 
     Time taken: {(clock):.3f} seconds""")
+'''
 
 print(f"""Quote Method: 
     Unused: {unused_buckets(hashQuoteTable)}
