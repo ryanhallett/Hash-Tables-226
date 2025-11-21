@@ -1,5 +1,7 @@
 import csv
-
+import random
+import math
+import time
 
 class DataItem:
     def __init__(self, line):
@@ -14,58 +16,112 @@ class DataItem:
         self.quote = line[8]
 
 # create empty hash tables
-size = 10000 
+size = 8192 
+
 # Going to use collision for this, so new tables needed
 hashTitleTable = [[] for _ in range(size)]
 hashQuoteTable = [[] for _ in range(size)]
-prime = 31
 
 file = "MOCK_DATA.csv"
 counter = 0
 
-# 5 hash functions
-
-def hashFunctionOrd(key):
-    hashValue = 0
+# need to reduce the size of my values to fit into pythons system
+def conversion(key):
+    prime = 31
+    reduce = 2**53 - 1
+    value = 0
     for char in key:
         # using prime to create randomness
-        hashValue = (hashValue * prime + ord(char))
-    newKey = hashValue % size
+        value = (value * prime + ord(char)) % reduce
+    return value
+
+# 5 hash functions - mod, folding, midSquare, universal, multiplication
+# pass in the converted value
+
+# keeping it simple
+def mod(key):
+    # pretty basic modding
+    newKey = key % size
+    # return the key!
     return newKey
 
-'''
-def hashFunctionFolding(key):
-    num = 0
-    for i in key:
-        num += ord(i)
-    
-    sum_digits = 0
+# folding a bit
+def fold(key):
+    # setting up a list for the folded digits
     digits = []
+    # setting up for the sum of the individual digits
+    sum_digits = 0
+    # if there is still digits
+    while key > 0:
+        # append the last digit to a list
+        digits.append(key % 10)
+        # divide by 10
+        key //= 10
+    # reverse the list instead of inserting 
+    # inserting is less efficient
+    digits.reverse()
 
-    while num > 0:
-        digits.append(num % 10)
-        num //= 10
-
+    # add every item in my list to each other
     for item in digits:
         sum_digits += item
 
-    folded_index = sum_digits % size
-    return folded_index
-'''
+    # my new key is 
+    newKey = sum_digits % size
+    return newKey
 
-#def hashFunctionPlaceholder():
-    #pass
+# doing some wacky math
+def midSquare(key):
+    # sqaure the key
+    square = key * key
+    # extract 5 digits (length of size)
 
-#def hashFunctionPlaceholder():
-    #pass
+    # convert to strings
+    str_list = str(square)
+    # get the middle
+    middle = len(str_list) // 2
+    # find the start and end
+    start = middle - 2
+    end = middle + 3
+    # get the middle 5 digits
+    middle_five = str_list[start:end]
+    # turn it back into an integer and mod
+    newKey = int(middle_five) % size
+    return newKey
 
-#def hashFunctionPlaceholder():
-    #pass
+# universally applying??
+def universal(key):
+    # get a prime (large)
+    prime = 9999991
+    # select two random numbers
+    a = random.randint(1, (prime - 1))
+    b = random.randint(0, (prime - 1))
+    #multiply randomA(key) + randomB
+    value = ((a * key) + b) % prime
+    # mod a large prime number,
+    # # typically larger than the max possible value 
+    # from key, not sure if that will work yet
+    # had to get AI to generate a prime for me 
+    # finally, mod by size 
+    newKey = value % size
+    # return newKey
+    return newKey
 
-def handle_collisions_chaining(table, key, movie):
+# golden ratio mutiplication
+def multiplication(key):
+    # the formula said golden ratio was "usually" used
+    golden_ratio = float(0.61803398875)
+    # find the value, remove the integer, keep the fraction
+    # multiply by size
+    value = ((key * golden_ratio) % 1) * size
+    # round it down
+    newKey = math.floor(value)
+    return newKey
+
+# chaining because we used lists to create the tables
+def handle_collisions(table, index, movie):
     # collision happens when a bucket is not empty
-    collision_happened = len(table[key]) > 0
-    table[key].append(movie)
+    collision_happened = len(table[index]) > 0
+    table[index].append(movie)
     
     if collision_happened == True:
         return 1
@@ -79,35 +135,60 @@ def unused_buckets(table):
             unused += 1
     return unused
 
+t_collisions = 0
+q_collisions = 0
+
+start = time.time()
+
 with open(file, 'r', newline='',  encoding="utf8") as csvfile:
     reader = csv.reader(csvfile)
-    
-    title_collisions = 0
-    quote_collisions = 0 
-    
     for row in reader:
+        # skip header
         if counter == 0:
             counter += 1
             continue
+
+        # create movie from data(row)
         movie = DataItem(row)
 
-        firstFunctionTitle = hashFunctionOrd(movie.movie_name)
-        firstFunctionQuote = hashFunctionOrd(movie.quote)
+        # convert movie title and movie quote to keys (large numbers)
+        titleKey = conversion(movie.movie_name)
+        quoteKey = conversion(movie.quote)
 
-        title_collisions += handle_collisions_chaining(hashTitleTable, firstFunctionTitle, movie)
-        quote_collisions += handle_collisions_chaining(hashQuoteTable, firstFunctionQuote, movie)
+        # ONE AT A TIME
+        # commit after each attempt
+        # mod
+        hashKeyT = mod(titleKey)
+        hashKeyQ = mod(quoteKey)
 
-        # feed the appropriate field into the hash function
-        # to get a key
+        # fold
+        #hash_title = mod(titleKey)
+        #hash_quote = mod(quoteKey)
+
+        # mid Square
+        #hash_title = mod(titleKey)
+        #hash_quote = mod(quoteKey)
+
+        # universal
+        #hash_title = mod(titleKey)
+        #hash_quote = mod(quoteKey)
+
+        # multiplication
+        #hash_title = mod(titleKey)
+        #hash_quote = mod(quoteKey)
+
+        # handle collisions
+        t_collisions += handle_collisions(hashTitleTable, hashKeyT, movie.movie_name)
+        q_collisions += handle_collisions(hashTitleTable, hashKeyT, movie.quote)
         
-        # mod the key value by the hash table length
 
-        # try to insert DataItem into hash table
-        # handle any collisions
         counter += 1
 
-print(f"Title Collisions: {title_collisions}")
-print(f"Quote Collisions: {quote_collisions}")
-print(f"Unused title buckets: {unused_buckets(hashTitleTable)}")
-print(f"Unused title buckets: {unused_buckets(hashQuoteTable)}")
-print(f"Total movies: {counter - 1}")
+end = time.time()
+clock = end - start
+# out of the loop, find unused buckets
+
+print(f"""Title Method: Unused: {unused_buckets(hashTitleTable)},
+    Total Collisions: {t_collisions}, Time taken: {(clock):.3f} seconds""")
+print(f"""Quote Method: Unused: {unused_buckets(hashQuoteTable)},
+    Total Collisions: {q_collisions}, Time taken: {(clock):.3f} seconds""")
