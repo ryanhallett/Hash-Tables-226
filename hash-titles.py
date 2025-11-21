@@ -156,8 +156,8 @@ with open(file, 'r', newline='',  encoding="utf8") as csvfile:
         # ONE AT A TIME
         # commit after each attempt
         # mod
-        #hashKeyT = mod(titleKey)
-        #hashKeyQ = mod(quoteKey)
+        hashKeyT = mod(titleKey)
+        hashKeyQ = mod(quoteKey)
 
         # fold - NEED TO FIX STILL
         # hashKeyT = fold(titleKey)
@@ -172,8 +172,8 @@ with open(file, 'r', newline='',  encoding="utf8") as csvfile:
         #hashKeyQ = universal(quoteKey)
 
         # multiplication
-        hashKeyT = multiplication(titleKey)
-        hashKeyQ = multiplication(quoteKey)
+        #hashKeyT = multiplication(titleKey)
+        #hashKeyQ = multiplication(quoteKey)
 
         # handle collisions
         t_collisions += handle_collisions(hashTitleTable, hashKeyT, movie.movie_name)
