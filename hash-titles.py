@@ -38,7 +38,7 @@ def conversion(key):
 # 5 hash functions - mod, folding, midSquare, universal, multiplication
 # pass in the converted value
 
-# keeping it simple
+# keeping it simple - first
 def mod(key):
     # pretty basic modding
     newKey = key % size
