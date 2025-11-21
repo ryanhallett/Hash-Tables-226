@@ -16,7 +16,7 @@ class DataItem:
         self.quote = line[8]
 
 # create empty hash tables
-size = 16384 
+size = 8192
 
 # Going to use collision for this, so new tables needed
 hashTitleTable = [[] for _ in range(size)]
@@ -199,12 +199,27 @@ print(f"""Quote Method:
     Time taken: {(clock):.3f} seconds""")
 
 
-# with 8192 Buckets, Mod: 
-# 
+# with 8192 Buckets:
+#  
+# Title Method: 
+# Unused: 2047
+# Total Collisions: 8855 
+# Time taken: 0.099 seconds
+#
+# Quote Method: 
+# Unused: 8192
+# Total Collisions: 15000
+# Time taken: 0.099 seconds
 # 
 # with 16384 Buckets:
-# Title Method: Unused: 8180,
-# Total Collisions: 6796, Time taken: 0.097 seconds
-# Quote Method: Unused: 16384,
-# Total Collisions: 15000, Time taken: 0.097 seconds
+#
+# Title Method: 
+# Unused: 8180
+# Total Collisions: 6796
+# Time taken: 0.097 seconds
+#
+# Quote Method: 
+# Unused: 16384
+# Total Collisions: 15000
+# Time taken: 0.097 seconds
 
