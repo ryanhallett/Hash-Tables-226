@@ -48,28 +48,32 @@ def mod(key):
 # folding a bit
 def fold(key):
     # setting up a list for the folded digits
-    # setting up a large prime number, close to size
-    prime = 8191
+    # slicing using predetermined size and another list
+    slices = 3
     digits = []
-    # setting up for the sum of the individual digits
-    sum_digits = 0
-    # if there is still digits
+    sliced = []
+    sum_slices = 0
+
+    # if there is still digits in key
     while key > 0:
         # append the last digit to a list
         digits.append(key % 10)
         # divide by 10
         key //= 10
+
     # reverse the list instead of inserting 
     # inserting is less efficient
     digits.reverse()
 
-    # add every item in my list to each other
-    for digit in digits:
-        sum_digits += digit
+    for i in range(0, len(digits), slices):
+        sliced.append(digits[i:i + slices])
 
     # my new key is 
-    newKey = (sum_digits * prime) % size
-    return newKey
+    for group in sliced:
+        sum_slices += j
+
+    
+    #return newKey
 
 # doing some wacky math
 def midSquare(key):
