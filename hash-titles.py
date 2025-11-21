@@ -16,7 +16,7 @@ class DataItem:
         self.quote = line[8]
 
 # create empty hash tables
-size = 16384
+size = 8192
 
 # Going to use collision for this, so new tables needed
 hashTitleTable = [[] for _ in range(size)]
@@ -48,6 +48,8 @@ def mod(key):
 # folding a bit
 def fold(key):
     # setting up a list for the folded digits
+    # setting up a large prime number, close to size
+    prime = 8191
     digits = []
     # setting up for the sum of the individual digits
     sum_digits = 0
@@ -62,11 +64,11 @@ def fold(key):
     digits.reverse()
 
     # add every item in my list to each other
-    for item in digits:
-        sum_digits += item
+    for digit in digits:
+        sum_digits += digit
 
     # my new key is 
-    newKey = sum_digits % size
+    newKey = (sum_digits * prime) % size
     return newKey
 
 # doing some wacky math
