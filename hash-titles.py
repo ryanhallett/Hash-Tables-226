@@ -49,7 +49,7 @@ def mod(key):
 def fold(key):
     # setting up a list for the folded digits
     # slicing using predetermined size and another list
-    slices = 4
+    slices = 3
     digits = []
     sliced = []
 
