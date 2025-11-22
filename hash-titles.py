@@ -49,7 +49,7 @@ def mod(key):
 def fold(key):
     # setting up a list for the folded digits
     # slicing using predetermined size and another list
-    slices = 3
+    slices = 4
     digits = []
     sliced = []
 
@@ -59,15 +59,31 @@ def fold(key):
         digits.append(key % 10)
         # divide by 10
         key //= 10
-
-    # reverse the list instead of inserting 
-    # inserting is less efficient
+    # more efficient to reverse the list instead of inserting 
     digits.reverse()
 
+    # slice into chunks by slices number
     for i in range(0, len(digits), slices):
+        # extract a chunk of 3 digits
         sliced.append(digits[i:i + slices])
-    
-    #return newKey
+
+    # for the final value, multiplier for randomness
+    newKey = 0
+    multiplier = 1
+    # for each slice in the list
+    for i in sliced:
+        # start getting a sum
+        numSum = 0
+        # for each number in the slice
+        for j in i:
+            # add them up
+            numSum = numSum * 10 + j
+    # Add this groups value to the total
+        newKey += (numSum * multiplier)
+        multiplier += 2
+    newKey = newKey % size
+    # return
+    return newKey
 
 # doing some wacky math
 def midSquare(key):
@@ -156,12 +172,12 @@ with open(file, 'r', newline='',  encoding="utf8") as csvfile:
         # ONE AT A TIME
         # commit after each attempt
         # mod
-        hashKeyT = mod(titleKey)
-        hashKeyQ = mod(quoteKey)
+        #hashKeyT = mod(titleKey)
+        #hashKeyQ = mod(quoteKey)
 
         # fold - NEED TO FIX STILL
-        # hashKeyT = fold(titleKey)
-        #hashKeyQ = fold(quoteKey)
+        hashKeyT = fold(titleKey)
+        hashKeyQ = fold(quoteKey)
 
         # mid Square
         #hashKeyT = midSquare(titleKey)
