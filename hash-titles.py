@@ -69,7 +69,7 @@ def fold(key):
 
     # for the final value, multiplier for randomness
     newKey = 0
-    multiplier = 1
+    multiplier = 31
     # for each slice in the list
     for i in sliced:
         # start getting a sum
@@ -80,7 +80,7 @@ def fold(key):
             numSum = numSum * 10 + j
     # Add this groups value to the total
         newKey += (numSum * multiplier)
-        multiplier += 2
+        multiplier = multiplier * 31
     newKey = newKey % size
     # return
     return newKey
